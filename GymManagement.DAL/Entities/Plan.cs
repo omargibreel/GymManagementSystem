@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GymManagement.DAL.Entities
+{
+    internal class Plan:BaseEntity
+    {
+        #region Properties
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public decimal Price { get; set; }
+        public int DurationDays { get; set; }
+        public bool IsActive { get; set; }
+        #endregion
+
+        public ICollection<MemberShip> PlanMembers { get; set; } = null!;
+
+    }
+}
