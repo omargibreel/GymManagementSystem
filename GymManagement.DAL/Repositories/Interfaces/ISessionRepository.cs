@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Repositories.Interfaces
 {
-    internal interface IMemberRepository : IGenericRepository<Member>
+    internal interface ISessionRepository : IGenericRepository<Session>
     {
     }
 }

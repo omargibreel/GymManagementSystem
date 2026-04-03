@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Entities
 {
-    internal class MemberShip : BaseEntity
+    public class Membership : BaseEntity
     {
 
         // StartDate == CreatedAt Of BaseEntity 
@@ -23,7 +23,7 @@ namespace GymManagement.DAL.Entities
         {
             get
             {
-                if (EndDate > DateTime.UtcNow)
+                if (EndDate >= DateTime.UtcNow)
                     return "Expired";
                 else return "Active";
             }

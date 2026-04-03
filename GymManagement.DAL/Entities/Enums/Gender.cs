@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Entities.Enums
 {
-    internal enum Gender
+    public enum Gender
     {
         // i set Male to 1 because if don't set it, the default value will be 0,
         // and if we set with the default value zero , it will be set as Male

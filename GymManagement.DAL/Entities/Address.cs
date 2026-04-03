@@ -12,7 +12,7 @@ namespace GymManagement.DAL.Entities
              // it will be treated as a part of the owning entity and will be stored in the same table as the owning entity.
 
 
-    internal class Address
+    public class Address
     {
         public int BuildingNumber { get; set; }
         public string Street { get; set; } = null!;

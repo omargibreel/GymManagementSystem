@@ -2,24 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Repositories.Interfaces
 {
-    internal interface IGenericRepository<TEntity> where TEntity : BaseEntity
+    public interface IGenericRepository<TEntity> where TEntity : BaseEntity, new() // i new() constraint to ensure that TEntity is concrete and can be instantiated,
+                                                                                   // which is necessary for the Add method to create new instances of TEntity.
     {
-        // GetById
-        Task<TEntity> GetByIdAsync(int id);
-
-        // GetAll
-        Task<IEnumerable<TEntity>> GetAllAsync();
-
-        // Add
+        TEntity? GetById(int id);
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? condition = null);
         void Add(TEntity entity);
-        // Update
-        // Delete
-        void Delete(int id);
-
+        void Update(TEntity entity);
+        void Delete(TEntity entity);
     }
 }

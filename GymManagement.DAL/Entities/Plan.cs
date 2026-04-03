@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Entities
 {
-    internal class Plan:BaseEntity
+    public class Plan:BaseEntity
     {
         #region Properties
         public string Name { get; set; } = null!;
@@ -16,7 +16,7 @@ namespace GymManagement.DAL.Entities
         public bool IsActive { get; set; }
         #endregion
 
-        public ICollection<MemberShip> PlanMembers { get; set; } = null!;
+        public ICollection<Membership> PlanMembers { get; set; } = null!;
 
     }
 }

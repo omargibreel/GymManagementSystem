@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Data.Configurations
 {
-    internal class MemberShipConfiguration : IEntityTypeConfiguration<MemberShip>
+    internal class MemberShipConfiguration : IEntityTypeConfiguration<Membership>
     {
-        public void Configure(EntityTypeBuilder<MemberShip> builder)
+        public void Configure(EntityTypeBuilder<Membership> builder)
         {
             builder.Property(X => X.CreatedAt)
                 .HasColumnName("StartDate")

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Entities
 {
-    internal class MemberSession : BaseEntity
+    public class MemberSession : BaseEntity
     {
         // BookingDate == CreatedAt Of BaseEntity  ===> and i will configure it Using Fluent API
         public int MemberId { get; set; }

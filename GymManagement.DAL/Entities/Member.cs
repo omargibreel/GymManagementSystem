@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Entities
 {
-    internal class Member : GymUser
+    public class Member : GymUser
     {
         // JoinDate == CreatedAt Of BaseEntity  ===> and i will configure it Using Fluent API
         public string? Photo { get; set; }
@@ -16,7 +16,7 @@ namespace GymManagement.DAL.Entities
         #endregion
 
         #region Member - MemberShips
-        public ICollection<MemberShip> MemberShips { get; set; } = null!;
+        public ICollection<Membership> Memberships { get; set; } = null!;
         #endregion
 
         #region Member - MemberSession

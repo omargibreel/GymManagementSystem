@@ -6,14 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GymManagement.DAL.Data.Contect
+namespace GymManagement.DAL.Data.Context
 {
-    internal class GymDbContext : DbContext
+    public class GymDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=.;Database=GymManagement;Trusted_Connection=True;TrustServerCertificate=True;");
-        }
+        public GymDbContext(DbContextOptions<GymDbContext> options) : base(options) { }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=.;Database=GymManagement;Trusted_Connection=True;TrustServerCertificate=True;");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,7 +29,7 @@ namespace GymManagement.DAL.Data.Contect
         public DbSet<Plan> Plans { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Session> Sessions { get; set; }
-        public DbSet<MemberShip> MemberShips { get; set; }
+        public DbSet<Membership> Memberships { get; set; }
         public DbSet<MemberSession> MemberSessions { get; set; }
         #endregion
 
