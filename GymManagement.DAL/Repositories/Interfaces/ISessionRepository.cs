@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Repositories.Interfaces
 {
-    internal interface ISessionRepository : IGenericRepository<Session>
+    public interface ISessionRepository : IGenericRepository<Session>
     {
+        IEnumerable<Session> GetAllSessionsWithTrainerAndCategory();
+        Session? GetSessionWithTrainerAndCategory(int id);
+        int GetCountOfBookingSlots(int sessionId);
     }
 }

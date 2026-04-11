@@ -20,6 +20,16 @@ namespace GymManagement.DAL.Repositories.Classes
             _context = context;
         }
 
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? condition = null)
+        {
+            if (condition is null)
+            {
+                return _context.Set<TEntity>().AsNoTracking();
+            }
+            var entities = _context.Set<TEntity>().AsNoTracking().Where(condition);
+            return entities;
+        }
+
         public TEntity? GetById(int id)
         {
             var entity = _context.Set<TEntity>().Find(id);
@@ -32,16 +42,5 @@ namespace GymManagement.DAL.Repositories.Classes
         public void Delete(TEntity entity) => _context.Set<TEntity>().Remove(entity);
 
         public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);
-
-
-        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? condition = null)
-        {
-            if (condition is null)
-            {
-                return _context.Set<TEntity>().AsNoTracking();
-            }
-            var entities = _context.Set<TEntity>().AsNoTracking().Where(condition);
-            return entities;
-        }
     }
 }
