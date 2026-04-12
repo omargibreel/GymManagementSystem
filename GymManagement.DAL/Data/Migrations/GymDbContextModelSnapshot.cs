@@ -56,13 +56,15 @@ namespace GymManagement.DAL.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Height")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Weight")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.HasKey("Id");
 
@@ -153,7 +155,7 @@ namespace GymManagement.DAL.Data.Migrations
                     b.ToTable("MemberSessions");
                 });
 
-            modelBuilder.Entity("GymManagement.DAL.Entities.MemberShip", b =>
+            modelBuilder.Entity("GymManagement.DAL.Entities.Membership", b =>
                 {
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
@@ -177,7 +179,7 @@ namespace GymManagement.DAL.Data.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("MemberShips");
+                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("GymManagement.DAL.Entities.Plan", b =>
@@ -389,10 +391,10 @@ namespace GymManagement.DAL.Data.Migrations
                     b.Navigation("Session");
                 });
 
-            modelBuilder.Entity("GymManagement.DAL.Entities.MemberShip", b =>
+            modelBuilder.Entity("GymManagement.DAL.Entities.Membership", b =>
                 {
                     b.HasOne("GymManagement.DAL.Entities.Member", "Member")
-                        .WithMany("MemberShips")
+                        .WithMany("Memberships")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -474,7 +476,7 @@ namespace GymManagement.DAL.Data.Migrations
 
                     b.Navigation("MemberSessions");
 
-                    b.Navigation("MemberShips");
+                    b.Navigation("Memberships");
                 });
 
             modelBuilder.Entity("GymManagement.DAL.Entities.Plan", b =>

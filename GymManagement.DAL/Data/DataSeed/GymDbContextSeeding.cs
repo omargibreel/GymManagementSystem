@@ -48,7 +48,7 @@ namespace GymManagement.DAL.Data.DataSeed
         {
             // D:\Backend\Projects\GymManagementSystemSolution\GymManagement.PL\wwwroot\Files\categories.json
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", fileName);
-            if (File.Exists(filePath)) throw new FileNotFoundException();
+            if (!File.Exists(filePath)) throw new FileNotFoundException();
 
             string date = File.ReadAllText(filePath);
 
