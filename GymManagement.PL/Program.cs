@@ -1,4 +1,6 @@
 using GymManagement.BLL;
+using GymManagement.BLL.Services.Classes;
+using GymManagement.BLL.Services.Interfaces;
 using GymManagement.DAL.Data.Context;
 using GymManagement.DAL.Data.DataSeed;
 using GymManagement.DAL.Repositories.Classes;
@@ -23,6 +25,7 @@ namespace GymManagement.PL
             //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(IGenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<ISessionRepository, SessionRepository>();
+            builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
             builder.Services.AddAutoMapper(x=>x.AddProfile(new MappingProfiles()));
             var app = builder.Build();
 
