@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace GymManagement.BLL.Services.Classes
 {
-    internal class MemberService : IMemberService
+    public class MemberService : IMemberService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public MemberService(IUnitOfWork unitOfWork , IMapper mapper)
+        public MemberService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -86,7 +86,13 @@ namespace GymManagement.BLL.Services.Classes
         {
             try
             {
-                if (IsEmailExist(memberVM.Email) || IsPhoneExist(memberVM.Phone))
+                var emailExists = _unitOfWork.GetRepository<Member>()
+                     .GetAll(x => x.Email == memberVM.Email && x.Id != memberId).Any();
+
+                var phoneExists = _unitOfWork.GetRepository<Member>()
+                     .GetAll(x => x.Phone == memberVM.Phone && x.Id != memberId).Any();
+
+                if (emailExists || phoneExists)
                     return false;
 
                 var memberRepo = _unitOfWork.GetRepository<Member>();
@@ -115,11 +121,19 @@ namespace GymManagement.BLL.Services.Classes
             if (member is null)
                 return false;
 
-            var hasActiveMemberSession = _unitOfWork.GetRepository<MemberSession>().GetAll(ms => ms.MemberId == memberId && ms.Session.StartDate > DateTime.UtcNow).Any();
-            if (hasActiveMemberSession)
+            var sessionIds = _unitOfWork.GetRepository<MemberSession>()
+                .GetAll(ms => ms.MemberId == memberId)
+                .Select(x => x.SessionId);
+
+            var HasFutureSessions = _unitOfWork.GetRepository<Session>()
+                .GetAll(s => sessionIds.Contains(s.Id) && s.StartDate > DateTime.Now).Any();
+
+            if (HasFutureSessions)
                 return false;
+
             var membershipRepo = _unitOfWork.GetRepository<Membership>();
             var memberships = membershipRepo.GetAll(m => m.MemberId == memberId).ToList();
+
             try
             {
                 if (memberships.Any())

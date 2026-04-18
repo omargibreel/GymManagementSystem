@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.BLL.ViewModels.TrainerViewModels
 {
-    internal class UpdateTrainerViewModel
+    public class UpdateTrainerViewModel
     {
         [Required(ErrorMessage = "Name is Required")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 50")]
