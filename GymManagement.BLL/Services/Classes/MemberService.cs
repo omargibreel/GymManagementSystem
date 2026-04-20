@@ -53,7 +53,8 @@ namespace GymManagement.BLL.Services.Classes
 
             var memberVM = _mapper.Map<MemberViewModel>(member);
 
-            var activeMembership = _unitOfWork.GetRepository<Membership>().GetAll(m => m.MemberId == memberId && m.Status == "Active").FirstOrDefault();
+            var activeMembership = _unitOfWork.GetRepository<Membership>()
+                .GetAll(m => m.MemberId == memberId && m.EndDate > DateTime.UtcNow).FirstOrDefault();
 
             if (activeMembership is not null)
             {

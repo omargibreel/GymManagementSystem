@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.BLL.Services.Classes
 {
-    internal class PlanService : IPlanService
+    public class PlanService : IPlanService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -99,9 +99,9 @@ namespace GymManagement.BLL.Services.Classes
         private bool HasActiveMemberships(int id)
         {
             var activeMemberships = _unitOfWork.GetRepository<Membership>()
-                .GetAll(m => m.PlanId == id && m.Status == "Active");
-            return activeMemberships.Any();
+                .GetAll(m => m.PlanId == id && m.EndDate > DateTime.UtcNow);
 
+            return activeMemberships.Any();
         }
     }
 }

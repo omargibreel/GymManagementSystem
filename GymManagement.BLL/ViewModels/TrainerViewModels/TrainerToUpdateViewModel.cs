@@ -26,6 +26,6 @@ namespace GymManagement.BLL.ViewModels.TrainerViewModels
 
         public string Street { get; set; } = null!;
 
-        public Specialties Specialities { get; set; }
+        public Specialties Specialties { get; set; }
     }
 }

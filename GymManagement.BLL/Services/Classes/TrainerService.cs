@@ -1,4 +1,5 @@
-﻿using GymManagement.BLL.Services.Interfaces;
+﻿using AutoMapper;
+using GymManagement.BLL.Services.Interfaces;
 using GymManagement.BLL.ViewModels.TrainerViewModels;
 using GymManagement.DAL.Entities;
 using GymManagement.DAL.UnitOfWork;
@@ -13,10 +14,12 @@ namespace GymManagement.BLL.Services.Classes
     public class TrainerService : ITrainerService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public TrainerService(IUnitOfWork unitOfWork)
+        public TrainerService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public bool CreateTrainer(CreateTrainerViewModel createTrainer)
         {
@@ -26,21 +29,25 @@ namespace GymManagement.BLL.Services.Classes
                     var repo = _unitOfWork.GetRepository<Trainer>();
                     if (IsEmailExist(createTrainer.Email) || IsPhoneExist(createTrainer.Phone))
                         return false;
-                    var trainer = new Trainer
-                    {
-                        Name = createTrainer.Name,
-                        Email = createTrainer.Email,
-                        Phone = createTrainer.Phone,
-                        DateOfBirth = createTrainer.DateOfBirth,
-                        Specialties = createTrainer.Specialities,
-                        Gender = createTrainer.Gender,
-                        Address = new Address
-                        {
-                            City = createTrainer.City,
-                            Street = createTrainer.Street,
-                            BuildingNumber = createTrainer.BuildingNumber,
-                        }
-                    };
+
+                    //var trainer = new Trainer
+                    //{
+                    //    Name = createTrainer.Name,
+                    //    Email = createTrainer.Email,
+                    //    Phone = createTrainer.Phone,
+                    //    DateOfBirth = createTrainer.DateOfBirth,
+                    //    Specialties = createTrainer.Specialities,
+                    //    Gender = createTrainer.Gender,
+                    //    Address = new Address
+                    //    {
+                    //        City = createTrainer.City,
+                    //        Street = createTrainer.Street,
+                    //        BuildingNumber = createTrainer.BuildingNumber,
+                    //    }
+                    //};
+
+                    var trainer = _mapper.Map<Trainer>(createTrainer);
+
                     repo.Add(trainer);
                     return _unitOfWork.SaveChanges() > 0;
                 }
@@ -57,6 +64,7 @@ namespace GymManagement.BLL.Services.Classes
                 return [];
             return trainers.Select(x => new TrainerViewModel
             {
+                Id = x.Id,
                 Name = x.Name,
                 Email = x.Email,
                 Phone = x.Phone,
@@ -72,10 +80,15 @@ namespace GymManagement.BLL.Services.Classes
 
             return new TrainerViewModel
             {
+                Id=trainer.Id,
                 Name = trainer.Name,
                 Email = trainer.Email,
                 Phone = trainer.Phone,
                 Specialties = trainer.Specialties.ToString(),
+                Address = $"{trainer.Address.BuildingNumber} - {trainer.Address.Street} - {trainer.Address.City}",
+                DateOfBirth = trainer.DateOfBirth.ToString("dd/MM/yyyy"),
+
+
             };
         }
 
@@ -95,7 +108,7 @@ namespace GymManagement.BLL.Services.Classes
                 BuildingNumber = trainer.Address.BuildingNumber,
                 City = trainer.Address.City,
                 Street = trainer.Address.Street,
-                Specialities = trainer.Specialties,
+                Specialties = trainer.Specialties,
                 Gender = trainer.Gender,
             };
         }
@@ -103,17 +116,23 @@ namespace GymManagement.BLL.Services.Classes
         {
             var repo = _unitOfWork.GetRepository<Trainer>();
             var trainerToUpdate = repo.GetById(id);
-            if (trainerToUpdate is null || IsEmailExist(updatedTrainer.Email) || IsPhoneExist(updatedTrainer.Phone))
+
+            var emailExist = repo.GetAll(x => x.Email == updatedTrainer.Email && x.Id != id).Any();
+            var phoneExist = repo.GetAll(x => x.Phone == updatedTrainer.Phone && x.Id != id).Any();
+
+            if(trainerToUpdate is null || emailExist || phoneExist)
                 return false;
 
-            trainerToUpdate.Email = updatedTrainer.Email;
-            trainerToUpdate.Phone = updatedTrainer.Phone;
-            trainerToUpdate.Address.BuildingNumber = updatedTrainer.BuildingNumber;
-            trainerToUpdate.Address.City = updatedTrainer.City;
-            trainerToUpdate.Address.Street = updatedTrainer.Street;
-            trainerToUpdate.DateOfBirth = updatedTrainer.DateOfBirth;
-            trainerToUpdate.UpdatedAt = DateTime.Now;
-            trainerToUpdate.Specialties = updatedTrainer.Specialities;
+            //trainerToUpdate.Email = updatedTrainer.Email;
+            //trainerToUpdate.Phone = updatedTrainer.Phone;
+            //trainerToUpdate.Address.BuildingNumber = updatedTrainer.BuildingNumber;
+            //trainerToUpdate.Address.City = updatedTrainer.City;
+            //trainerToUpdate.Address.Street = updatedTrainer.Street;
+            //trainerToUpdate.DateOfBirth = updatedTrainer.DateOfBirth;
+            //trainerToUpdate.UpdatedAt = DateTime.Now;
+            //trainerToUpdate.Specialties = updatedTrainer.Specialities;
+
+            _mapper.Map(updatedTrainer, trainerToUpdate);
 
             return _unitOfWork.SaveChanges() > 0;
         }

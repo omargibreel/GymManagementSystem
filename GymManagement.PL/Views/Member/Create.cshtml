@@ -52,30 +52,30 @@
                             
                 <div class="col-12 col-md-6">
                     <label asp-for="Name" class="form-label">Name</label>
-                    <input asp-for="Name" type="text" class="form-control" />
+                    <input asp-for="Name" type="text" class="form-control" placeholder="Enter name" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="Email" class="form-label">Email</label>
-                    <input asp-for="Email" type="text" class="form-control" />
+                    <input asp-for="Email" type="text" class="form-control" placeholder="Enter email" />
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="Phone" class="form-label">Phone</label>
-                    <input asp-for="Phone" type="text" class="form-control" />
+                    <input asp-for="Phone" type="text" class="form-control" placeholder="Enter phone number" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-6">
                     <label asp-for="DateOfBirth" class="form-label">DateOfBirth</label>
-                    <input asp-for="DateOfBirth" class="form-control" type="date" />
+                    <input asp-for="DateOfBirth" class="form-control" type="date" placeholder="Select date of birth" />
                     <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="Gender" class="form-label">Gender</label>
-                    <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<Gender>()">>
+                    <select asp-for="Gender" class="form-select" asp-items="Html.GetEnumSelectList<Gender>()">
                         <option value=""> --- Select Gender --- </option>
                     </select>
                     <span asp-validation-for="Gender" class="text-danger"></span>
@@ -90,18 +90,18 @@
 
                 <div class="col-12 col-md-6">
                     <label asp-for="BuildingNumber" class="form-label">Building Number</label>
-                    <input asp-for="BuildingNumber" class="form-control" />
+                    <input asp-for="BuildingNumber" class="form-control" placeholder="Enter building number" />
                     <span asp-validation-for="BuildingNumber" class="text-danger"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="Street" class="form-label">Street</label>
-                    <input asp-for="Street" class="form-control" />
+                    <input asp-for="Street" class="form-control" placeholder="Enter street" />
                     <span asp-validation-for="Street" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-6">
                     <label asp-for="City" class="form-label">City</label>
-                    <input asp-for="City" class="form-control" />
+                    <input asp-for="City" class="form-control" placeholder="Enter city" />
                     <span asp-validation-for="City" class="text-danger"></span>
                 </div>
             </div>
@@ -112,13 +112,13 @@
             <div class="row g-3">
                 <div class="col-12 col-md-6">
                     <label asp-for="HealthRecordViewModel.Height" class="form-label"></label>
-                    <input asp-for="HealthRecordViewModel.Height" class="form-control" />
+                    <input asp-for="HealthRecordViewModel.Height" class="form-control" placeholder="Enter height" />
                     <span asp-validation-for="HealthRecordViewModel.Height" class="text-danger"></span>
                 </div>
 
                 <div class="col-12 col-md-6">
                     <label asp-for="HealthRecordViewModel.Weight" class="form-label"></label>
-                    <input asp-for="HealthRecordViewModel.Weight" class="form-control" />
+                    <input asp-for="HealthRecordViewModel.Weight" class="form-control" placeholder="Enter weight" />
                     <span asp-validation-for="HealthRecordViewModel.Weight" class="text-danger"></span>
                 </div>
 
@@ -139,7 +139,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <label asp-for="HealthRecordViewModel.Note" class="form-label"></label>
-                    <input asp-for="HealthRecordViewModel.Note" class="form-control" />
+                    <input asp-for="HealthRecordViewModel.Note" class="form-control" placeholder="Enter notes" />
                 </div>
             </div>
         </div>
