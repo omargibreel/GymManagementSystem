@@ -12,7 +12,7 @@ namespace GymManagement.DAL.Repositories.Interfaces
                                                                                    // which is necessary for the Add method to create new instances of TEntity.
     {
         TEntity? GetById(int id);
-        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? condition = null);
+        IEnumerable<TEntity> GetAll(Func<TEntity, bool>? condition = null);
         void Add(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);

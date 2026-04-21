@@ -20,13 +20,11 @@ namespace GymManagement.DAL.Repositories.Classes
             _context = context;
         }
 
-        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>>? condition = null)
+        public IEnumerable<TEntity> GetAll(Func<TEntity, bool>? condition = null)
         {
             if (condition is null)
-            {
-                return _context.Set<TEntity>().AsNoTracking();
-            }
-            var entities = _context.Set<TEntity>().AsNoTracking().Where(condition);
+                return _context.Set<TEntity>().AsNoTracking().ToList();
+            var entities = _context.Set<TEntity>().AsNoTracking().Where(condition).ToList();
             return entities;
         }
 

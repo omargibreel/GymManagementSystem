@@ -99,7 +99,7 @@ namespace GymManagement.BLL.Services.Classes
         private bool HasActiveMemberships(int id)
         {
             var activeMemberships = _unitOfWork.GetRepository<Membership>()
-                .GetAll(m => m.PlanId == id && m.EndDate > DateTime.UtcNow);
+                .GetAll(m => m.PlanId == id && m.Status == "Active");
 
             return activeMemberships.Any();
         }

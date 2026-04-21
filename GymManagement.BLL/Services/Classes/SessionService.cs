@@ -145,12 +145,25 @@ namespace GymManagement.BLL.Services.Classes
                 Console.WriteLine($"Remove Session Failed: {ex.Message}");
                 return false;
             }
+
+        }
+
+        public IEnumerable<TrainerSelectViewModel> GetTrainerForDropDown()
+        {
+            var trainers = _unitOfWork.GetRepository<Trainer>().GetAll();
+            return _mapper.Map<IEnumerable<Trainer>, IEnumerable<TrainerSelectViewModel>>(trainers);
+        }
+
+        public IEnumerable<CategorySelectViewModel> GetCategoryForDropDown()
+        {
+            var categories = _unitOfWork.GetRepository<Category>().GetAll();
+            return _mapper.Map<IEnumerable<Category>, IEnumerable<CategorySelectViewModel>>(categories);
         }
 
         #region HelperMethods
         private bool IsSessionAvailableToUpdating(Session session)
         {
-            if (session is not null) return false;
+            if (session is null) return false;
 
             // If Session Completed => Not Available For Updating
             if (session.EndDate < DateTime.Now) return false;
@@ -164,7 +177,7 @@ namespace GymManagement.BLL.Services.Classes
         }
         private bool IsSessionAvailableToRemoving(Session session)
         {
-            if (session is not null) return false;
+            if (session is null) return false;
 
             // If Session Started => Not Available For removing
             if (session.StartDate <= DateTime.Now && session.EndDate > DateTime.Now) return false;
@@ -186,7 +199,7 @@ namespace GymManagement.BLL.Services.Classes
         }
         private bool IsDateTimeValid(DateTime startDate, DateTime endDate)
         {
-            return startDate < endDate;
+            return startDate < endDate && startDate > DateTime.Now;
         }
 
         #endregion

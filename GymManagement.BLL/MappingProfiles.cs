@@ -63,9 +63,9 @@ namespace GymManagement.BLL
             CreateMap<UpdateSessionViewModel, Session>().ReverseMap();
 
 
-            //CreateMap<Trainer, TrainerSelectViewModel>();
-            //CreateMap<Category, CategoryViewModel>()
-            //    .ForMember(dist => dist.Name, opt => opt.MapFrom(src => src.CategoryName));
+            CreateMap<Trainer, TrainerSelectViewModel>();
+            CreateMap<Category, CategorySelectViewModel>()
+                .ForMember(dist => dist.Name, opt => opt.MapFrom(src => src.CategoryName));
         }
         private void MapMember()
         {
