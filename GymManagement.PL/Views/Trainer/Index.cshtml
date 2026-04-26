@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<TrainerViewModel>
-
+@{
+    ViewData["Title"] = "Trainer";
+}
 @if (TempData["SuccessMessage"] != null)
 {
     <div id="Alert" class="alert alert-success alert-dismissible fade show">
