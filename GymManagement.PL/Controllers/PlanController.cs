@@ -1,10 +1,12 @@
 ﻿using GymManagement.BLL.Services.Interfaces;
 using GymManagement.BLL.ViewModels.PlanViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace GymManagement.PL.Controllers
 {
+    [Authorize]
     public class PlanController : Controller
     {
         private readonly IPlanService _planService;
@@ -74,7 +76,7 @@ namespace GymManagement.PL.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Activate(int id) 
+        public IActionResult Activate(int id)
         {
             var result = _planService.ToggleStatus(id);
             if (result)

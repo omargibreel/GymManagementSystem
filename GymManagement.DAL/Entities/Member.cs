@@ -9,7 +9,7 @@ namespace GymManagement.DAL.Entities
     public class Member : GymUser
     {
         // JoinDate == CreatedAt Of BaseEntity  ===> and i will configure it Using Fluent API
-        public string? Photo { get; set; }
+        public string Photo { get; set; } = null!;
 
         #region Member - HealthRecord
         public HealthRecord HealthRecord { get; set; } = null!;

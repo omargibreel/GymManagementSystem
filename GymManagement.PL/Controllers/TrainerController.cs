@@ -1,9 +1,11 @@
 ﻿using GymManagement.BLL.Services.Interfaces;
 using GymManagement.BLL.ViewModels.TrainerViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagement.PL.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class TrainerController : Controller
     {
         private readonly ITrainerService _trainerService;
@@ -76,7 +78,7 @@ namespace GymManagement.PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit([FromRoute]int id, UpdateTrainerViewModel model)
+        public IActionResult Edit([FromRoute] int id, UpdateTrainerViewModel model)
         {
             if (!ModelState.IsValid)
             {

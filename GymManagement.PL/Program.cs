@@ -1,11 +1,15 @@
 using GymManagement.BLL;
+using GymManagement.BLL.Services.AttachmentService;
 using GymManagement.BLL.Services.Classes;
 using GymManagement.BLL.Services.Interfaces;
 using GymManagement.DAL.Data.Context;
 using GymManagement.DAL.Data.DataSeed;
+using GymManagement.DAL.Entities;
 using GymManagement.DAL.Repositories.Classes;
 using GymManagement.DAL.Repositories.Interfaces;
 using GymManagement.DAL.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymManagement.PL
@@ -30,18 +34,35 @@ namespace GymManagement.PL
             builder.Services.AddScoped<ITrainerService, TrainerService>();
             builder.Services.AddScoped<IPlanService, PlanService>();
             builder.Services.AddScoped<ISessionService, SessionService>();
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddAutoMapper(x=>x.AddProfile(new MappingProfile()));
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<GymDbContext>();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
             var app = builder.Build();
 
 
             #region Migrate Database - Data Seeding
             using var scope = app.Services.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<GymDbContext>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             var pendingMigrations = dbContext.Database.GetPendingMigrations();
             if (pendingMigrations?.Any() ?? false)
                 dbContext.Database.Migrate();
 
             GymDbContextSeeding.SeedData(dbContext);
+            IdentityDbContextSeeding.SeedData(roleManager, userManager);
             #endregion
 
 
@@ -56,12 +77,13 @@ namespace GymManagement.PL
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Account}/{action=Login}/{id?}")
                 .WithStaticAssets();
 
             app.Run();
