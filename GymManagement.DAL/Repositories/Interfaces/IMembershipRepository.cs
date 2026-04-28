@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace GymManagement.DAL.Repositories.Interfaces
 {
-    internal interface IMemberRepository : IGenericRepository<Member>
+    public interface IMembershipRepository : IGenericRepository<Membership>
     {
+        IEnumerable<Membership> GetAllMembershipWithMembersAndPlans(Func<Membership, bool>? filter = null);
     }
 }
